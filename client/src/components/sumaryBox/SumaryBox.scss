@@ -1,0 +1,156 @@
+.section {
+    .acutalMonth {
+        width: 100%;
+        height: 45px;
+        background: #27ae60;
+        color: #fff;
+        padding: 10px;
+        position: relative;
+
+        &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: transparent;
+            position: absolute;
+            bottom: 0px;
+            left: 1px;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .expandIcon {
+            display: block;
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #f1c40f;
+            border: 8px solid #27ae60;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%, 50%);
+            box-sizing: content-box;
+            outline: none;
+            cursor: pointer;
+            z-index: 2;
+
+            .iconContainer {
+                width: 35px;
+                height: 35px;
+                box-shadow: 0px 0px 5px 0px #8c8c8c;
+                background: #f1c40f;
+                border-radius: 50%;
+                border: 1px solid #f7e187;
+            }
+
+            &:active .iconContainer {
+                background: #f8e187;
+                border: none;
+            }
+        }
+    }
+
+    .sumarySection {
+        display: grid;
+        width: 100%;
+        min-height: 250px;
+        align-content: stretch;
+        justify-content: stretch;
+
+        .sumaryIncome {
+            display: grid;
+            height: 100%;
+            grid-template-columns: 35fr 65fr;
+            padding: 30px 10px 10px;
+            background: white;
+
+
+
+            .categoryList {
+                display: grid;
+                width: 100%;
+                height: 100%;
+                // background: pink;
+                border-right: 1.2px solid #f2f2f2;
+                box-shadow: 5px 0 10px -5px #b3b3b3;
+                align-content: center;
+                justify-items: stretch;
+                align-items: start;
+
+                .categoryItem {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                    justify-items: end;
+                    justify-content: center;
+                    align-content: center;
+                    height: 50px;
+
+
+                    .categoryName {
+                        font-size: 14px;
+                        line-height: 34px;
+                    }
+
+
+                    i {
+                        display: inline-block;
+                        position: relative;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        background: #16a085;
+                        margin: 5px;
+                        font-size: 12px;
+                        color: white;
+
+                        &::before {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    &:not(:last-of-type) {
+                        border-bottom: 1.1px solid #f2f2f2;
+                    }
+                }
+            }
+
+            .sumaryGraph {
+                margin: 0 0px 0px 5px;
+
+                .graphCategoryList {
+                    display: grid;
+                    width: 100%;
+                    height: 100%;
+                    align-content: center;
+
+                    .categoryItem {
+                        display: grid;
+                        height: 50px;
+                        grid-template-columns: 1fr;
+                        align-content: center;
+
+                        .percentageBox {
+                            height: 20px;
+                            width: 100%;
+                            background: red;
+                            color: #fff;
+                            line-height: 20px;
+                            padding-left: 3px;
+                            border-radius: 3px;
+                            font-size: 12px;
+                        }
+
+                        .nominal {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

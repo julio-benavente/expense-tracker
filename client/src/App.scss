@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: segoe ui light;
+
+}
+
+.App {
+    min-width: 100vw;
+    min-height: 100vh;
+    background: #95a5a6;
+
+}
+
+
+
+.project-wraper {
+    width: 375px;
+    min-height: 640px;
+    background: #ecf0f1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    min-height: 650px;
+    max-height: 650px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    font-weight: bold;
+
+    &::-webkit-scrollbar {
+        width: .5em;
+        background: gainsboro;
+    }
+
+    &::-webkit-scrollbar-track {
+        // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: gray;
+    }
+}

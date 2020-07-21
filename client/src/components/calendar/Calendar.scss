@@ -1,0 +1,61 @@
+.react-calendar {
+    width: 100%;
+    border: none;
+
+
+    &__navigation {
+        background: #27ae60;
+        margin: 0;
+
+        &>* {
+            color: white;
+            font-weight: bold;
+
+        }
+    }
+
+
+    &__month-view__weekdays {
+        div {
+            background: #f2f2f2;
+            border-bottom: .5px gainsboro solid;
+
+            &:not(:last-child) {
+                border-right: .5px gainsboro solid;
+
+            }
+
+            abbr {
+                text-decoration: none;
+                color: #FF8C00;
+            }
+        }
+    }
+
+    &__month-view__days {
+        button {
+            border-right: .5px gainsboro solid;
+            border-bottom: .5px gainsboro solid;
+            font-weight: bold;
+
+            &:nth-child(7n) {
+                border-right: none;
+            }
+
+            &.react-calendar__month-view__days__day--neighboringMonth {
+                font-weight: normal;
+                color: gainsboro;
+            }
+
+            &.react-calendar__tile--now {
+                background: #FFFFE0;
+            }
+
+            &.react-calendar__tile--active {
+                background: #87CEEB;
+                color: black;
+
+            }
+        }
+    }
+}
