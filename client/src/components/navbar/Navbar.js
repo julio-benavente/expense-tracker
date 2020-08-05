@@ -1,40 +1,64 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.scss";
 import { NavLink, useLocation, useRouteMatch } from "react-router-dom";
+import { connect } from "react-redux";
+import { getItems } from "../../actions/itemActions";
 
-function Navbar() {
-  let { path, url } = useRouteMatch();
+function Navbar(props) {
+  const { value, onChange, data, getItems } = props;
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const buttonsData = [
+    {
+      type: "income",
+      img: "https://img.icons8.com/dusk/32/000000/money-transfer.png",
+      detail: "Income",
+    },
+
+    {
+      type: "balance",
+      img: "https://img.icons8.com/dusk/32/000000/bill.png",
+      detail: "Balance",
+    },
+    {
+      type: "expense",
+      img: "https://img.icons8.com/dusk/32/000000/cash-.png",
+      detail: "Expense",
+    },
+  ];
+
+  const NavButton = ({ type, img, detail }) => {
+    return (
+      <NavLink
+        to={`/${type}/${value.getFullYear()}${(
+          "0" +
+          (value.getMonth() + 1)
+        ).slice(-2)}`}
+      >
+        <button id={`${type}-btn`} type="button" className="m-button">
+          <img src={img} alt={`${type}_icon`} />
+          {detail}
+        </button>
+      </NavLink>
+    );
+  };
+
   return (
     <nav className="navbar">
-      <NavLink to={`${url !== "/" ? url : ""}/income`}>
-        <button id="income-btn" type="button" className="m-button">
-          <img
-            src="https://img.icons8.com/dusk/32/000000/money-transfer.png"
-            alt="income_icon"
-          />
-          Ingresos
-        </button>
-      </NavLink>
-      <NavLink exact to={`${url !== "/" ? url : ""}/balance`}>
-        <button id="balance-btn" tsype="button" className="m-button">
-          <img
-            src="https://img.icons8.com/dusk/32/000000/bill.png"
-            alt="balance_icon"
-          />
-          Saldo
-        </button>
-      </NavLink>
-      <NavLink to={`${url !== "/" ? url : ""}/expense`}>
-        <button id="expenses-btn" type="button" className="m-button">
-          <img
-            src="https://img.icons8.com/dusk/32/000000/cash-.png"
-            alt="expense_icon"
-          />
-          Gastos
-        </button>
-      </NavLink>
+      {buttonsData.map(({ type, url, img, detail }, e) => {
+        return (
+          <NavButton key={e} type={type} url={url} img={img} detail={detail} />
+        );
+      })}
     </nav>
   );
 }
 
-export default Navbar;
+const mapPropsToState = (state) => ({
+  item: state.item,
+});
+
+export default connect(mapPropsToState, { getItems })(Navbar);

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Add.scss";
-import { categories } from "../other/categories";
-import { useHistory } from "react-router-dom";
+import { categories } from "../../extras/categories";
+import { useHistory, useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { addItem } from "../../actions/itemActions";
 
 function Category({
   type,
@@ -32,14 +34,20 @@ function Category({
   );
 }
 
-function Add({ lastLocation, setLastLocation }) {
+function Add(props) {
+  const { lastLocation, addItem } = props;
+
   const history = useHistory();
+  const { date } = useParams();
+
   const [radioType, setRadioType] = useState("income");
   const [amount, setAmount] = useState(0);
+  const [note, setNote] = useState("");
 
   // Radio buttons
   const [incomeCategory, setIncomeCategory] = useState("deposit");
   const [expenseCategory, setExpenseCategory] = useState("auto");
+
   const handleIncomeCategory = (e) => {
     setIncomeCategory(e.target.value);
   };
@@ -49,7 +57,26 @@ function Add({ lastLocation, setLastLocation }) {
   //
 
   const onSubmit = (e) => {
-    e.preverDefault();
+    e.preventDefault();
+
+    const newItem = {
+      type: radioType,
+      value: radioType == "income" ? incomeCategory : expenseCategory,
+      description:
+        radioType == "income"
+          ? `${incomeCategory
+              .slice(0, 1)
+              .toLocaleUpperCase()}${incomeCategory.slice(1)}`
+          : `${expenseCategory
+              .slice(0, 1)
+              .toLocaleUpperCase()}${expenseCategory.slice(1)}`,
+      note: note,
+      date: new Date(date.slice(0, 4), date.slice(4, 6) - 1, date.slice(6, 8)),
+      amount: parseFloat(amount),
+    };
+
+    console.log(newItem);
+    addItem(newItem);
   };
 
   const handleType = (e) => {
@@ -84,7 +111,7 @@ function Add({ lastLocation, setLastLocation }) {
           onClick={handleClose}
         ></i>
       </div>
-      <form className="inputForm" action="" onSubmit={onSubmit}>
+      <form className="inputForm" action="">
         <label className="radioIncome">
           <input
             name="incomeExpense"
@@ -117,7 +144,13 @@ function Add({ lastLocation, setLastLocation }) {
           }}
         />
         <br />
-        <textarea className="note" />
+        <textarea
+          className="note"
+          value={note}
+          onChange={(e) => {
+            setNote(e.target.value);
+          }}
+        />
 
         <p>
           Choose {radioType == "income" ? "income" : "expense"} category ...
@@ -160,7 +193,13 @@ function Add({ lastLocation, setLastLocation }) {
           <button className="closeButton" onClick={handleClose}>
             Close
           </button>
-          <button className="submitButton" type="submit">
+          <button
+            className="submitButton"
+            onClick={(e) => {
+              onSubmit(e);
+              handleClose();
+            }}
+          >
             Save
           </button>
         </div>
@@ -169,4 +208,8 @@ function Add({ lastLocation, setLastLocation }) {
   );
 }
 
-export default Add;
+const mapPropsToSate = (state) => ({
+  item: state.item,
+});
+
+export default connect(mapPropsToSate, { addItem })(Add);
